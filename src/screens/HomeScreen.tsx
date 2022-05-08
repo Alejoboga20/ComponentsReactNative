@@ -1,8 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { styles } from '../theme/appTheme';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MenuItem } from '../interfaces/appInterfaces';
+import { FlatListMenuItem } from '../components/FlatListMenuItem';
 
 const menuItems: MenuItem[] = [
   {
@@ -19,15 +21,6 @@ const menuItems: MenuItem[] = [
 
 export const HomeScreen = () => {
   const { top } = useSafeAreaInsets();
-  const renderMenuItem = (menuItem: MenuItem) => {
-    return (
-      <View>
-        <Text>
-          {menuItem.name} - {menuItem.icon}
-        </Text>
-      </View>
-    );
-  };
 
   const renderListHeader = () => {
     return (
@@ -55,15 +48,9 @@ export const HomeScreen = () => {
         data={menuItems}
         ListHeaderComponent={renderListHeader}
         ItemSeparatorComponent={renderItemSeparator}
-        renderItem={({ item }) => renderMenuItem(item)}
+        renderItem={({ item }) => <FlatListMenuItem menuItem={item} />}
         keyExtractor={item => item.name}
       />
     </View>
   );
 };
-
-interface MenuItem {
-  name: string;
-  icon: string;
-  component: string;
-}
